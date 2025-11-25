@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>///SIGNAL_DETECTED///</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- CRT Screen Overlay -->
+    <div class="crt-overlay"></div>
+    <div class="scanlines"></div>
+    <div class="flicker"></div>
+
+    <!-- Glitch Container -->
+    <div class="glitch-container">
+        <!-- Boot Sequence -->
+        <div id="boot-sequence" class="boot-sequence">
+            <div class="boot-content">
+                <div class="boot-text" id="boot-text">
+                    <p>BIOS v6.66 - UNDERGROUND SYSTEMS INC.</p>
+                    <p>Checking memory... <span class="blink">OK</span></p>
+                    <p>Detecting signal... <span class="blink">FOUND</span></p>
+                    <p class="warning">WARNING: SECURE AREA DETECTED</p>
+                </div>
+                <div class="password-section" id="password-section">
+                    <div class="password-prompt">
+                        <p class="access-text">ACCESS RESTRICTED</p>
+                        <p class="enter-password">ENTER ACCESS CODE:</p>
+                        <div class="password-input-container">
+                            <span class="password-prefix">&gt;</span>
+                            <input type="text" id="boot-password" class="password-input" readonly onfocus="this.removeAttribute('readonly');" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" maxlength="20" style="-webkit-text-security: disc;">
+                        </div>
+                        <p class="password-hint" id="password-hint"></p>
+                        <p class="password-attempts" id="password-attempts">ATTEMPTS REMAINING: 3</p>
+                    </div>
+                </div>
+                <div class="access-granted-section hidden" id="access-granted-section">
+                    <p class="success">ACCESS GRANTED</p>
+                    <p class="welcome-text">WELCOME TO THE UNDERGROUND</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Intro Animation Overlay -->
+        <div id="intro-overlay" class="intro-overlay">
+            <pre class="intro-ascii" id="intro-ascii">
+██████╗  █████╗ ██╗   ██╗███████╗
+██╔══██╗██╔══██╗██║   ██║██╔════╝
+██████╔╝███████║██║   ██║█████╗
+██╔══██╗██╔══██║╚██╗ ██╔╝██╔══╝
+██║  ██║██║  ██║ ╚████╔╝ ███████╗
+╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚══════╝
+████████╗██████╗ ██╗   ██╗███████╗
+╚══██╔══╝██╔══██╗██║   ██║██╔════╝
+   ██║   ██████╔╝██║   ██║█████╗
+   ██║   ██╔══██╗██║   ██║██╔══╝
+   ██║   ██║  ██║╚██████╔╝███████╗
+   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚══════╝
+██████╗  █████╗ ██╗   ██╗███████╗
+██╔══██╗██╔══██╗██║   ██║██╔════╝
+██████╔╝███████║██║   ██║█████╗
+██╔══██╗██╔══██║╚██╗ ██╔╝██╔══╝
+██║  ██║██║  ██║ ╚████╔╝ ███████╗
+╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚══════╝
+████████╗██████╗ ██╗   ██╗███████╗
+╚══██╔══╝██╔══██╗██║   ██║██╔════╝
+   ██║   ██████╔╝██║   ██║█████╗
+   ██║   ██╔══██╗██║   ██║██╔══╝
+   ██║   ██║  ██║╚██████╔╝███████╗
+   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚══════╝
+██████╗  █████╗ ██╗   ██╗███████╗
+██╔══██╗██╔══██╗██║   ██║██╔════╝
+██████╔╝███████║██║   ██║█████╗
+██╔══██╗██╔══██║╚██╗ ██╔╝██╔══╝
+██║  ██║██║  ██║ ╚████╔╝ ███████╗
+╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚══════╝
+████████╗██████╗ ██╗   ██╗███████╗
+╚══██╔══╝██╔══██╗██║   ██║██╔════╝
+   ██║   ██████╔╝██║   ██║█████╗
+   ██║   ██╔══██╗██║   ██║██╔══╝
+   ██║   ██║  ██║╚██████╔╝███████╗
+   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚══════╝
+            </pre>
+        </div>
+
+        <!-- Main Content -->
+        <div id="main-content" class="main-content hidden">
+            <!-- Header -->
+            <header class="header" id="header">
+                <pre class="ascii-header" id="ascii-header">
+████████╗██████╗ ██╗   ██╗███████╗    ██████╗  █████╗ ██╗   ██╗███████╗
+╚══██╔══╝██╔══██╗██║   ██║██╔════╝    ██╔══██╗██╔══██╗██║   ██║██╔════╝
+   ██║   ██████╔╝██║   ██║█████╗      ██████╔╝███████║██║   ██║█████╗
+   ██║   ██╔══██╗██║   ██║██╔══╝      ██╔══██╗██╔══██║╚██╗ ██╔╝██╔══╝
+   ██║   ██║  ██║╚██████╔╝███████╗    ██║  ██║██║  ██║ ╚████╔╝ ███████╗
+   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚══════╝    ╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚══════╝
+                </pre>
+            </header>
+
+            <!-- Countdown Section - AT TOP -->
+            <section class="countdown-section">
+                <div class="countdown-label">RAVE BEGINS IN:</div>
+                <div class="countdown-container">
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="days">00</span>
+                        <span class="countdown-unit">DAYS</span>
+                    </div>
+                    <div class="countdown-separator">:</div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="hours">00</span>
+                        <span class="countdown-unit">HOURS</span>
+                    </div>
+                    <div class="countdown-separator">:</div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="minutes">00</span>
+                        <span class="countdown-unit">MINS</span>
+                    </div>
+                    <div class="countdown-separator">:</div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="seconds">00</span>
+                        <span class="countdown-unit">SECS</span>
+                    </div>
+                </div>
+                <div class="encrypted-message">
+                    <span class="decrypt-label">[ENCRYPTED]:</span>
+                    <span id="encrypted-text" class="encrypted-text">█████████████████████</span>
+                </div>
+            </section>
+
+            <!-- Map Section (Target Location) -->
+            <section class="map-section">
+                <div class="map-header">///TARGET_LOCATION///</div>
+                <div class="map-container">
+                    <div class="map-wrapper">
+                        <canvas id="radar-canvas" class="radar-canvas"></canvas>
+                        <div class="map-overlay"></div>
+                        <div class="map-scanline"></div>
+                        <div class="map-blip" id="map-blip">
+                            <div class="blip-pulse"></div>
+                            <div class="blip-core"></div>
+                        </div>
+                        <div class="map-labels">
+                            <span class="map-label label-varna">VARNA</span>
+                            <span class="map-label label-sea">BLACK SEA</span>
+                            <span class="map-label label-target">TARGET</span>
+                        </div>
+                    </div>
+                    <div class="map-info" id="map-info">
+                        <!-- Locked state (default) -->
+                        <div class="info-locked" id="info-locked">
+                            <div class="lock-header">///ENCRYPTED_DATA///</div>
+                            <div class="lock-message">CLICK TO DECRYPT</div>
+                            <div class="lock-icon">🔒</div>
+                            <div class="lock-hint">SECURITY CLEARANCE REQUIRED</div>
+                        </div>
+                        <!-- Minigame state -->
+                        <div class="info-minigame hidden" id="info-minigame">
+                            <div class="minigame-header">///DECRYPTION_SEQUENCE///</div>
+                            <div class="minigame-instruction">TAP THE TARGETS IN ORDER</div>
+                            <div class="minigame-targets" id="minigame-targets">
+                                <div class="target-btn" data-order="1">1</div>
+                                <div class="target-btn" data-order="2">2</div>
+                                <div class="target-btn" data-order="3">3</div>
+                                <div class="target-btn" data-order="4">4</div>
+                            </div>
+                            <div class="minigame-progress" id="minigame-progress">0/4</div>
+                        </div>
+                        <!-- Unlocked state -->
+                        <div class="info-unlocked hidden" id="info-unlocked">
+                            <div class="info-line">TARGET: <span class="target-name">TABOO E.F.C.</span></div>
+                            <div class="info-line">COORDINATES: <a href="https://maps.google.com/?q=43.21981455681336,27.930967995102645" target="_blank" class="coords-link">43.2198°N 27.9310°E</a></div>
+                            <div class="info-line">SIGNAL STRENGTH: <span id="signal-strength">███████░░░</span> <span id="signal-percent">73%</span></div>
+                            <div class="info-line">DEPTH: <span class="warning-text">SUBTERRANEAN</span></div>
+                            <div class="info-line">SECTOR: <span class="pulse-text">PRIMORSKI</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BPM Timeline Slider -->
+            <div class="bpm-timeline">
+                <div class="bpm-display">
+                    <span class="bpm-label">BPM</span>
+                    <span class="bpm-value" id="bpm-value">138</span>
+                </div>
+                <div class="timeline-container">
+                    <div class="timeline-labels">
+                        <span class="time-label start">22:00</span>
+                        <span class="time-label mid">00:00</span>
+                        <span class="time-label mid">02:00</span>
+                        <span class="time-label mid">04:00</span>
+                        <span class="time-label end">06:00</span>
+                    </div>
+                    <div class="timeline-track">
+                        <div class="timeline-rail"></div>
+                        <input type="range" id="bpm-slider" class="bpm-slider" min="0" max="100" value="0">
+                        <div class="timeline-progress" id="timeline-progress"></div>
+                    </div>
+                    <div class="bpm-labels">
+                        <span class="bpm-mark">138</span>
+                        <span class="bpm-mark">140</span>
+                        <span class="bpm-mark">142</span>
+                        <span class="bpm-mark">145</span>
+                        <span class="bpm-mark">148</span>
+                        <span class="bpm-mark">150</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Secret Terminal -->
+            <section class="terminal-section">
+                <div class="terminal-header">
+                    <span class="terminal-title">root@underground:~#</span>
+                    <span class="terminal-controls">
+                        <span class="control-btn"></span>
+                        <span class="control-btn"></span>
+                        <span class="control-btn"></span>
+                    </span>
+                </div>
+                <div class="terminal-body">
+                    <div id="terminal-output" class="terminal-output">
+                        <p>> Initializing secure connection...</p>
+                        <p>> Connection established.</p>
+                        <p>> Type 'help' for available commands.</p>
+                        <p>> _</p>
+                    </div>
+                    <div class="terminal-input-line">
+                        <span class="prompt">></span>
+                        <input type="text" id="terminal-input" class="terminal-input" autocomplete="off" spellcheck="false" placeholder="Enter command...">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Hidden Messages (Easter Eggs) -->
+            <div class="hidden-messages">
+                <div class="glitch-text hidden-1" data-text="FIND THE FREQUENCY">FIND THE FREQUENCY</div>
+                <div class="morse-code hidden-2">.... . .-. .</div>
+                <div class="binary-message hidden-3">01010010 01000001 01010110 01000101</div>
+            </div>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="footer-static">
+                    <span class="footer-line">▓▒░ SIGNAL ORIGIN: EASTERN EUROPE ░▒▓</span>
+                    <span class="footer-line">▓▒░ CLASSIFICATION: OMEGA-7 ░▒▓</span>
+                    <span class="footer-line visitor-count">INTERCEPTORS: <span id="visitor-count">????</span></span>
+                </div>
+                <div class="secret-symbols">
+                    ◈ ◇ ◆ ▽ △ ○ ● ◎ ◉ ⊕ ⊗ ⊙
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Floating Audio Player (Bottom) -->
+    <div class="floating-player" id="floating-player">
+        <div class="fp-header">
+            <span class="fp-title">///NOW_PLAYING///</span>
+        </div>
+        <div class="fp-body">
+            <button class="fp-btn" id="play-pause-btn">
+                <span class="play-icon">▶</span>
+                <span class="pause-icon hidden">❚❚</span>
+            </button>
+            <div class="fp-info">
+                <div class="fp-track">BEN KLOCK - SUBZERO</div>
+                <div class="fp-time">
+                    <span id="current-time">00:00</span>
+                    <span>/</span>
+                    <span id="total-time">00:00</span>
+                </div>
+            </div>
+            <div class="fp-volume">
+                <span class="fp-vol-icon">◉</span>
+                <input type="range" id="volume-slider" min="0" max="100" value="70" class="fp-vol-slider">
+            </div>
+        </div>
+    </div>
+
+    <!-- Secret Access Panel (Hidden by default) -->
+    <div id="secret-panel" class="secret-panel hidden">
+        <div class="secret-content">
+            <div class="secret-header">///ACCESS_LEVEL_OMEGA///</div>
+            <div class="secret-body">
+                <p class="reveal-text">COORDINATES DECRYPTED</p>
+                <p class="coordinates-reveal">43°12'N 27°54'E</p>
+                <p class="location-hint">WHERE THE BLACK SEA WHISPERS</p>
+                <p class="date-reveal">27.XII.MMXXV</p>
+                <p class="time-reveal">22:00 LOCAL</p>
+                <div class="secret-warning">
+                    DO NOT SHARE. DELETE AFTER READING.
+                </div>
+            </div>
+            <button id="close-secret" class="close-secret">[X] PURGE DATA</button>
+        </div>
+    </div>
+
+    <!-- Konami Code Easter Egg Overlay -->
+    <div id="konami-overlay" class="konami-overlay hidden">
+        <div class="konami-content">
+            <pre class="ascii-art">
+    ██████╗  █████╗ ██╗   ██╗███████╗
+    ██╔══██╗██╔══██╗██║   ██║██╔════╝
+    ██████╔╝███████║██║   ██║█████╗
+    ██╔══██╗██╔══██║╚██╗ ██╔╝██╔══╝
+    ██║  ██║██║  ██║ ╚████╔╝ ███████╗
+    ╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚══════╝
+            </pre>
+            <p class="konami-message">YOU FOUND THE SECRET FREQUENCY</p>
+            <p class="konami-hint">THE UNDERGROUND AWAITS</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
