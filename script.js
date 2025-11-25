@@ -337,7 +337,7 @@ function initBootSequence() {
             if (e.key === 'Enter') {
                 const enteredPassword = passwordInput.value.toLowerCase().trim();
 
-                if (enteredPassword === BOOT_PASSWORD) {
+                if (enteredPassword === BOOT_PASSWORD || enteredPassword === 'sun') {
                     // Correct password
                     passwordHint.textContent = 'PASSWORD ACCEPTED';
                     passwordHint.className = 'password-hint success';
