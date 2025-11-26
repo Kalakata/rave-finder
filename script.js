@@ -323,6 +323,75 @@ function initBootSequence() {
     const accessGrantedSection = document.getElementById('access-granted-section');
     const bootSequence = document.getElementById('boot-sequence');
     const mainContent = document.getElementById('main-content');
+    const enterBtn = document.getElementById('enter-btn');
+
+    // Password validation function
+    function validatePassword() {
+        const enteredPassword = passwordInput.value.toLowerCase().trim();
+
+        if (enteredPassword === BOOT_PASSWORD || enteredPassword === 'sun') {
+            // Correct password
+            passwordHint.textContent = 'PASSWORD ACCEPTED';
+            passwordHint.className = 'password-hint success';
+            passwordInput.disabled = true;
+            if (enterBtn) enterBtn.disabled = true;
+
+            // Show access granted
+            setTimeout(() => {
+                passwordSection.style.display = 'none';
+                accessGrantedSection.classList.remove('hidden');
+
+                // Transition to intro animation
+                setTimeout(() => {
+                    bootSequence.classList.add('hidden');
+                    playIntroAnimation();
+                }, 2000);
+            }, 500);
+
+        } else {
+            // Wrong password
+            state.passwordAttempts--;
+            attemptsDisplay.textContent = `ATTEMPTS REMAINING: ${state.passwordAttempts}`;
+
+            if (state.passwordAttempts <= 0) {
+                passwordHint.textContent = 'ACCESS DENIED - SYSTEM LOCKED';
+                passwordHint.className = 'password-hint error';
+                passwordInput.disabled = true;
+                attemptsDisplay.textContent = 'LOCKOUT INITIATED';
+                attemptsDisplay.style.color = '#ff0040';
+
+                // After lockout, reveal a hint
+                setTimeout(() => {
+                    passwordHint.textContent = 'HINT: What do seekers find? The _ _ _ _   _ _ _ _';
+                    passwordHint.style.color = '#00ffff';
+                    passwordInput.disabled = false;
+                    state.passwordAttempts = 1;
+                    attemptsDisplay.textContent = 'FINAL ATTEMPT';
+                }, 3000);
+            } else {
+                passwordHint.textContent = 'INVALID ACCESS CODE';
+                passwordHint.className = 'password-hint error';
+
+                // Give subtle hints based on attempts
+                if (state.passwordAttempts === 2) {
+                    setTimeout(() => {
+                        passwordHint.textContent = 'HINT: Seek the authentic experience...';
+                        passwordHint.style.color = '#ffaa00';
+                    }, 1500);
+                } else if (state.passwordAttempts === 1) {
+                    setTimeout(() => {
+                        passwordHint.textContent = 'HINT: What is genuine? What is real?';
+                        passwordHint.style.color = '#ffaa00';
+                    }, 1500);
+                }
+            }
+
+            // Clear input and shake effect
+            passwordInput.value = '';
+            passwordInput.classList.add('shake');
+            setTimeout(() => passwordInput.classList.remove('shake'), 500);
+        }
+    }
 
     // Focus password input after animation
     setTimeout(() => {
@@ -335,69 +404,7 @@ function initBootSequence() {
     if (passwordInput) {
         passwordInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
-                const enteredPassword = passwordInput.value.toLowerCase().trim();
-
-                if (enteredPassword === BOOT_PASSWORD || enteredPassword === 'sun') {
-                    // Correct password
-                    passwordHint.textContent = 'PASSWORD ACCEPTED';
-                    passwordHint.className = 'password-hint success';
-                    passwordInput.disabled = true;
-
-                    // Show access granted
-                    setTimeout(() => {
-                        passwordSection.style.display = 'none';
-                        accessGrantedSection.classList.remove('hidden');
-
-                        // Transition to intro animation
-                        setTimeout(() => {
-                            bootSequence.classList.add('hidden');
-                            playIntroAnimation();
-                        }, 2000);
-                    }, 500);
-
-                } else {
-                    // Wrong password
-                    state.passwordAttempts--;
-                    attemptsDisplay.textContent = `ATTEMPTS REMAINING: ${state.passwordAttempts}`;
-
-                    if (state.passwordAttempts <= 0) {
-                        passwordHint.textContent = 'ACCESS DENIED - SYSTEM LOCKED';
-                        passwordHint.className = 'password-hint error';
-                        passwordInput.disabled = true;
-                        attemptsDisplay.textContent = 'LOCKOUT INITIATED';
-                        attemptsDisplay.style.color = '#ff0040';
-
-                        // After lockout, reveal a hint
-                        setTimeout(() => {
-                            passwordHint.textContent = 'HINT: What do seekers find? The _ _ _ _   _ _ _ _';
-                            passwordHint.style.color = '#00ffff';
-                            passwordInput.disabled = false;
-                            state.passwordAttempts = 1;
-                            attemptsDisplay.textContent = 'FINAL ATTEMPT';
-                        }, 3000);
-                    } else {
-                        passwordHint.textContent = 'INVALID ACCESS CODE';
-                        passwordHint.className = 'password-hint error';
-
-                        // Give subtle hints based on attempts
-                        if (state.passwordAttempts === 2) {
-                            setTimeout(() => {
-                                passwordHint.textContent = 'HINT: Seek the authentic experience...';
-                                passwordHint.style.color = '#ffaa00';
-                            }, 1500);
-                        } else if (state.passwordAttempts === 1) {
-                            setTimeout(() => {
-                                passwordHint.textContent = 'HINT: What is genuine? What is real?';
-                                passwordHint.style.color = '#ffaa00';
-                            }, 1500);
-                        }
-                    }
-
-                    // Clear input and shake effect
-                    passwordInput.value = '';
-                    passwordInput.classList.add('shake');
-                    setTimeout(() => passwordInput.classList.remove('shake'), 500);
-                }
+                validatePassword();
             }
         });
 
@@ -409,6 +416,14 @@ function initBootSequence() {
             } else {
                 passwordHint.textContent = '';
             }
+        });
+    }
+
+    // Handle enter button click
+    if (enterBtn) {
+        enterBtn.addEventListener('click', () => {
+            playKeySound('enter');
+            validatePassword();
         });
     }
 }
